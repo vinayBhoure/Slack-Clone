@@ -26,13 +26,15 @@ export default function ChatSection() {
         </div>
       </div>
  
- {/* chat messages */}
+
       <div>
+       {/* chat messages */}
          <Messages />
       </div>
 
-      {/* chat input */}
+      
       <div>
+      {/* chat input */}
         <ChatInput channelId={roomId}/>
       </div>
     </div>

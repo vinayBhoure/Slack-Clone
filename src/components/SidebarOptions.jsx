@@ -22,7 +22,9 @@ export default function SidebarOptions({ title, icon, channel, setChannel, id })
     }
   };
 
-  // inserting data into rooms table
+  /* -----------------------------------------------------------------------------------------------------------------------
+                                   // inserting data into rooms table
+  -------------------------------------------------------------------------------------------------------------------------- */
   const addChannel = async () => {
     try {
       const channelName = prompt("Please enter the channel name");
@@ -43,7 +45,9 @@ export default function SidebarOptions({ title, icon, channel, setChannel, id })
     }
   };
 
-  //  fetching data from rooms table
+    /* -----------------------------------------------------------------------------------------------------------------------
+                                   // inserting data into rooms table
+  -------------------------------------------------------------------------------------------------------------------------- */
 
   async function fetchData() {
     try {
