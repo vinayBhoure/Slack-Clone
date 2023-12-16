@@ -6,7 +6,7 @@ import "./App.css";
 function App() {
   return (
     <div className="App w-screen h-screen overflow-hidden">
-      {1 ? <Login user={user} setUser={setUser} /> : <Home />}
+      {1 ? <Login /> : <Home />}
     </div>
   );
 }

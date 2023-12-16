@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import slackIcon from "../assets/slackIcon.png";
-import { supabase } from "../config/config";
+import { databases } from "../config/config";
 import toast from "react-hot-toast";
 
 function Login() {
@@ -17,31 +17,7 @@ function Login() {
   /* ----------------------------------------------------------------------------------------------------------------------------
                                                       Auth section is pending here
   ------------------------------------------------------------------------------------------------------------------------------*/
-  async function signInWithEmail(e) {
-    e.preventDefault();
-    try {
-      const { data, error } = await supabase.auth.signInWithOtp({
-        email: formData.email,
-        options: {
-          // set this to false if you do not want the user to be automatically signed up
-          shouldCreateUser: false,
-          emailRedirectTo: "http://localhost:3000/",
-        },
-      });
-      if (error) {
-        throw error;
-      } else {
-        toast.success("Mail sent to your email");
-        console.log("this is user data", data);
-      }
-    } catch (error) {
-      toast.error("error while sending email to user", error.message);
-      console.log(error);
-    }
-
-    console.log(" this is form data : ", formData);
-    setFormData({ email: "", password: "" });
-  }
+  
 
   return (
     <div className="flex justify-center items-center h-[100%] bg-gray-200">

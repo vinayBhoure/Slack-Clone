@@ -5,68 +5,75 @@ import SidebarOptions from "./SidebarOptions";
 import { MdOutlineInsertComment } from "react-icons/md";
 import { IoAddOutline } from "react-icons/io5";
 import { MdExpandLess } from "react-icons/md";
-import { MdExpandMore } from "react-icons/md"
+import { MdExpandMore } from "react-icons/md";
 import { IoAppsSharp } from "react-icons/io5";
 import { PiFiles } from "react-icons/pi";
 import { IoPeopleSharp } from "react-icons/io5";
 // import { CiSaveDown2 } from "react-icons/ci";
-import { IoBookmarkOutline } from "react-icons/io5"; 
+import { IoBookmarkOutline } from "react-icons/io5";
 import { FaEnvelopeOpen } from "react-icons/fa6";
 import { SlPicture } from "react-icons/sl";
 import { useState } from "react";
-
-
+import { databases } from "../config/config";
 
 export default function Sidebar() {
-  
-  const [channel, setChannel] = useState([]);
+  const promise = databases.listDocuments(
+    "657c921dbb1d727e7892", // database id
+    "657c92254fd30c159f33" // collection id
+  );
+  promise.then(
+    function (response) {
+      const { documents } = response;
+      console.log(documents);
+    },
+    function (error) {
+      console.log(error); // Failure
+    }
+  );
 
-  const sideMenu = [{
-    title: "Thread",
-    icon: <MdOutlineInsertComment />
-  },
-  {
-    title: "Mentions & reactions",
-    icon: <SlPicture />
-  },
-  {
-    title: "Saved Items",
-    icon: <FaEnvelopeOpen />
-  },
-  {
-    title: "Channel browser",
-    icon: <IoBookmarkOutline />
-  },
-  {
-    title: "People & user groups",
-    icon: <IoPeopleSharp />
-  },
-  {
-    title: "Apps",
-    icon: <IoAppsSharp /> 
-  },
-  {
-    title: "File browser",
-    icon: <PiFiles />
-  },
-  {
-    title: "Show less",
-    icon: <MdExpandLess />
-  },
-
- ]
-
- console.log(channel);
+  const sideMenu = [
+    {
+      title: "Thread",
+      icon: <MdOutlineInsertComment />,
+    },
+    {
+      title: "Mentions & reactions",
+      icon: <SlPicture />,
+    },
+    {
+      title: "Saved Items",
+      icon: <FaEnvelopeOpen />,
+    },
+    {
+      title: "Channel browser",
+      icon: <IoBookmarkOutline />,
+    },
+    {
+      title: "People & user groups",
+      icon: <IoPeopleSharp />,
+    },
+    {
+      title: "Apps",
+      icon: <IoAppsSharp />,
+    },
+    {
+      title: "File browser",
+      icon: <PiFiles />,
+    },
+    {
+      title: "Show less",
+      icon: <MdExpandLess />,
+    },
+  ];
 
   return (
     <div className="text-white divide-y divide-neutral-600">
-
-    {/* header info section */}
+      {/* header info section */}
       <div className="flex items-center basis-1 py-2 border-t border-neutral-600">
         <div className="">
           <h1 className="text-base font-semibold ">Vinay FAM</h1>
           <p className="flex items-center text-sm">
-            <FaCircle className="h-2 mt-1"  style={{color:'green'}} />
+            <FaCircle className="h-2 mt-1" style={{ color: "green" }} />
             vinay Bhoure
           </p>
         </div>
@@ -77,24 +84,30 @@ export default function Sidebar() {
 
       {/* Menu section  */}
       <div className="py-2">
-       {sideMenu.map((item, index) => (
-         <SidebarOptions key={index} title={item.title} icon={item.icon} />
-       ))}
-      
+        {sideMenu.map((item, index) => (
+          <div
+            className="flex text-sm items-center pl-2 cursor-pointer hover:opacity-80 hover:bg-[#340e36]"
+            key={index}
+          >
+            <div className=" ">{item.icon && item.icon}</div>
+            {item.icon && (
+              <div className="p-1 ml-2 font-normal ">{item.title}</div>
+            )}
+          </div>
+        ))}
       </div>
 
       <div className="py-2">
-      <SidebarOptions title={"Channels"} icon={<MdExpandMore /> }  />
+        <SidebarOptions title={"Channels"} icon={<MdExpandMore />} />
       </div>
 
       <div className="py-2">
-      <SidebarOptions title={"Add Channel"} icon={<IoAddOutline /> } channel={channel} setChannel={setChannel} />
-     
-      {channel && channel.map((item, index) => {
-        return <SidebarOptions key={index} id={channel.id} title={item.name} icon={"#"} />
-      })}
+        <SidebarOptions
+          title={"Add Channel"}
+          icon={<IoAddOutline />}
+          addChannelOption
+        />
       </div>
-
     </div>
   );
 }

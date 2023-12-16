@@ -1,8 +1,11 @@
+import { Client } from 'appwrite';
+import { Databases } from 'appwrite';
 
-import { createClient } from '@supabase/supabase-js'
+const client = new Client();
 
-const supabaseUrl = 'https://xobpoebtsuszxvfqchs.supabase.co'
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhvYnBvZWJ0c3VzeHp2ZnFwY2hzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDIzOTkyNTIsImV4cCI6MjAxNzk3NTI1Mn0.oNjMEhdWoW-TfPoHlF3ytyLHbra2B0VChjJnZFNc8B8'
+export const databases = new Databases(client);
 
-export const supabase = createClient(supabaseUrl, supabaseKey);
-
+client
+    .setEndpoint('https://cloud.appwrite.io/v1') // Your API Endpoint
+    .setProject('657c91a311919768bac6') // Your project ID
+;

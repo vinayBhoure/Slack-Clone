@@ -1,76 +1,70 @@
 import React from "react";
-import { supabase } from "../config/config";
+import { databases } from "../config/config";
 import { enterRoom } from "../redux/appSlice";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
-export default function SidebarOptions({ title, icon, channel, setChannel, id }) {
- 
+import { ID } from "appwrite";
+import { selectClasses } from "@mui/material";
+export default function SidebarOptions({
+  title,
+  icon,
+  fetchData,
+  addChannelOption
+}) {
   const dispatch = useDispatch();
 
   //condition for Add Channel button
-  const addChannelOption = title === "Add Channel" ? true : false;
+ 
 
   const selectChannel = () => {
-    toast(`Channel-> ${id} selected`);
-    if (id) {
-      dispatch(
-        enterRoom({
-          roomId: id,
-        })
-      );
-    }
+    // toast(`Channel-> ${id} selected`);
+    // if (id) {
+    //   dispatch(
+    //     enterRoom({
+    //       roomId: id,
+    //     })
+    //   );
+    // }
   };
 
   /* -----------------------------------------------------------------------------------------------------------------------
                                    // inserting data into rooms table
   -------------------------------------------------------------------------------------------------------------------------- */
-  const addChannel = async () => {
+  const addChannel =  () => {
+
     try {
       const channelName = prompt("Please enter the channel name");
-      const { error } = await supabase
-        .from("rooms")
-        .insert({ name: channelName });
+      if (!channelName) return;
 
-      if (error){
-        toast.error("Error occured while adding channel");
-        console.log("error ocuured while inserting data", error);
-      } 
-      else {
-        toast.success("Channel added successfully");
-      }
-    } catch (error) {
-      console.log(error);
-      toast.error("Error occured while adding channel");
+      const promise = databases.createDocument(
+        "657c921dbb1d727e7892", // database id
+        "657c92254fd30c159f33", // collection id
+        ID.unique(), // document id
+        {
+          channelName: channelName,
+        }
+      );
+
+      promise.then(
+        function (response) {
+          toast.success("Channel added successfully");
+          
+        },
+        function (error) {
+          toast.error("error while adding channel", error.message);
+          console.log(error); // Failure
+        }
+      );
+    } 
+    catch (err) {
+      toast.error("error while adding channel", err.message);
     }
-  };
-
-    /* -----------------------------------------------------------------------------------------------------------------------
-                                   // inserting data into rooms table
-  -------------------------------------------------------------------------------------------------------------------------- */
-
-  async function fetchData() {
-    try {
-      const { data, error } = await supabase.from("rooms").select("*");
-
-      if (error) {
-        console.log("error occured while fetching data", error);
-        toast.error("Error occured while adding channel");
-      }
-
-      if (addChannelOption) {
-        setChannel(data);
-      }
-    } catch (error) {
-      console.log(error);
-      toast.error("Error occured while fetching data");
-    }
+    // fetchData();
   }
-  useEffect(() => {
-    if(channel !== 0) fetchData();
-    
-  },[]);
+  
 
+  /* ------------------------------------------------Rendering------------------------------------------------------------------- */
   return (
     <div
       className="flex text-sm items-center pl-2 cursor-pointer hover:opacity-80 hover:bg-[#340e36]"

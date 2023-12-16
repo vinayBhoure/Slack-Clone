@@ -13,7 +13,7 @@ export default function Home() {
       <div className="basis-[30%] h-screen bg-[#3f0f40] "><Sidebar /></div>
         <div className="basis-[70%]">
         <Routes>
-          <Route path="/" element={<ChatSection />} />
+          <Route path="/chatSection" element={<ChatSection />} />
         </Routes>
         </div>
         
