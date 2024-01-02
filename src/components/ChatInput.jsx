@@ -1,40 +1,81 @@
 import React from "react";
 import { IoMdSend } from "react-icons/io";
 import { useState } from "react";
+import { databases } from "../config/config";
+import { ID } from "appwrite";
+import { account } from "../config/config";
+import toast from "react-hot-toast";
 
-function ChatInput({ channelName, channelId }) {
-  const [message, setMessage] = useState({
-    messages: "",
+function ChatInput({channelId, flag, setFlag }) {
+  
+  const [inputData, setInputData] = useState({
+    inputData: "",
   });
+
+  const userData = account.get();
+  const [username, setUsername] = useState("");
+  userData.then(
+    function (response) {
+      setUsername(response.email.split("@")[0]);
+    },
+    function (error) {
+      console.log(error); // Failure
+    }
+  );
+
   const sendMessage = (e) => {
     e.preventDefault();
 
-    // if (!channelId) {
-    //   return false;
-    // }
+    if (!channelId) {
+      toast.error("Please select a channel");
+      return false;
+    }
+    if (!inputData.inputData) {
+      toast.error("Please enter a message");
+      return false;
+    }
+    const message = databases.createDocument(
+      "657c921dbb1d727e7892",
+      "657c9243cef5deb3affe",
+      ID.unique(),
+      {
+        rooms: channelId,
+        message: inputData.inputData,
+        sender: username,
+      }
+    );
 
-    // storing messages in the database and getting it to create chat messages
-    console.log(message.messages);
-    setMessage({ ...message, messages: "" });
+    message.then(
+      function (response) {
+        setInputData({ inputData: "" });
+        console.log("chat message",response);
+        setFlag(!flag);
+      },
+      function (error) {
+        console.log(error); // Failure
+      }
+    );
   };
   const changeHandler = (e) => {
-    setMessage({ ...message, [e.target.name]: e.target.value });
+    setInputData({ ...inputData, [e.target.name]: e.target.value });
   };
 
   return (
     <div className="rounded-md">
       <form onSubmit={sendMessage} className="flex justify-center relative">
-        <input
-          type="text"
-          placeholder={`Message #${channelName}`}
-          className="w-[60%] rounded-sm p-2 fixed bottom-[30px] border border-slate-400 outline-none"
-          name="messages"
-          value={message.messages || ""}
-          onChange={changeHandler}
-        />
-        <button type="submit" hidden>
-          <IoMdSend />
-        </button>
+        <div className="w-[60%] flex justify-between rounded-sm p-2 fixed bottom-[30px] border border-slate-400 ">
+          <input
+            type="text"
+            placeholder={`Message`}
+            name="inputData"
+            className="w-11/12 outline-none"
+            value={inputData.inputData || ""}
+            onChange={changeHandler}
+          />
+          <button>
+            <IoMdSend />
+          </button>
+        </div>
       </form>
     </div>
   );

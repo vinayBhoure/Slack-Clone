@@ -2,14 +2,30 @@ import React from "react";
 import { databases } from "../config/config";
 import toast from "react-hot-toast";
 import { ID } from "appwrite";
+import { useDispatch } from "react-redux";
+import { enterRoom } from "../redux/appSlice";
+import { useNavigate } from "react-router";
 
 export default function SidebarOptions({
   title,
   icon,
-  addChannelOption
+  addChannelOption,
+  setRender,
+  render,
+  id
 }) {
 
-  const selectChannel = () => {}
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const selectChannel = () => {
+    if(id){
+      dispatch(enterRoom({
+        roomId:id,
+        roomName:title
+      }))
+      navigate(`/chatsection`);
+    }
+  }
   /* -----------------------------------------------------------------------------------------------------------------------
                                    // inserting data into rooms table
   -------------------------------------------------------------------------------------------------------------------------- */
@@ -31,18 +47,19 @@ export default function SidebarOptions({
       promise.then(
         function (response) {
           toast.success("Channel added successfully");
-          
         },
         function (error) {
           toast.error("error while adding channel", error.message);
           console.log(error); // Failure
         }
       );
+      setTimeout(() => {
+        setRender(!render);
+      }, 2000);
     } 
     catch (err) {
       toast.error("error while adding channel", err.message);
     }
-  
   }
   
 

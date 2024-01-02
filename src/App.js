@@ -1,24 +1,30 @@
 import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import { Routes, Route } from "react-router-dom";
-
 import "./App.css";
 import { useState } from "react";
+import LoginWithGoogle from "./pages/LoginWithGoogle";
+import { account } from "./config/config.js";
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
-  
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const promise = account.getSession('current');
+  promise.then(
+    function (response) {
+      console.log("get account",response);
+      setIsLoggedIn(true); // Success
+    },
+    function (error) {
+      setIsLoggedIn(false);
+      console.log(error); // Failure
+    }
+  );
 
   return (
     <div className="App w-screen h-screen overflow-hidden">
-      {!loggedIn ? (
-        <Home />
+      {isLoggedIn ? (
+        <Home islogin={isLoggedIn} setlogin={setIsLoggedIn} />
       ) : (
-        <Routes>
-          <Route path="/login" element={<Login logIn={loggedIn} setLogIn={setLoggedIn} />} />
-          <Route path="/" element={<Signup logIn={loggedIn} setLogIn={setLoggedIn} />} />
-        </Routes>
+        <LoginWithGoogle />
       )}
     </div>
   );

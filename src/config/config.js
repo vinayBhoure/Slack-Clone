@@ -1,8 +1,11 @@
 import { Client } from 'appwrite';
 import { Databases } from 'appwrite';
+import { Account } from 'appwrite';
 
 
 const client = new Client();
+
+export const account = new Account(client);
 
 export const databases = new Databases(client);
 
