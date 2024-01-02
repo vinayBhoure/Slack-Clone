@@ -1,33 +1,15 @@
 import React from "react";
 import { databases } from "../config/config";
-import { enterRoom } from "../redux/appSlice";
-import { useDispatch } from "react-redux";
-import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { ID } from "appwrite";
-import { selectClasses } from "@mui/material";
+
 export default function SidebarOptions({
   title,
   icon,
-  fetchData,
   addChannelOption
 }) {
-  const dispatch = useDispatch();
 
-  //condition for Add Channel button
- 
-
-  const selectChannel = () => {
-    // toast(`Channel-> ${id} selected`);
-    // if (id) {
-    //   dispatch(
-    //     enterRoom({
-    //       roomId: id,
-    //     })
-    //   );
-    // }
-  };
-
+  const selectChannel = () => {}
   /* -----------------------------------------------------------------------------------------------------------------------
                                    // inserting data into rooms table
   -------------------------------------------------------------------------------------------------------------------------- */
@@ -60,7 +42,7 @@ export default function SidebarOptions({
     catch (err) {
       toast.error("error while adding channel", err.message);
     }
-    // fetchData();
+  
   }
   
 

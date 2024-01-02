@@ -3,6 +3,7 @@ import { useState } from "react";
 import slackIcon from "../assets/slackIcon.png";
 import { databases } from "../config/config";
 import toast from "react-hot-toast";
+import { NavLink } from "react-router-dom";
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -22,6 +23,7 @@ function Login() {
   return (
     <div className="flex justify-center items-center h-[100%] bg-gray-200">
       <div className="basis-[50%] max-w-md p-8 border rounded-lg bg-slate-300 border-2">
+      <h1 className="font-bold text-center">Log In</h1>
         <div className="flex flex-col  items-center my-1">
           <img
             className="w-10 h-10 rounded-full hover:cursor-pointer hover:opacity-80 "
@@ -34,7 +36,7 @@ function Login() {
           </p>
         </div>
         <form
-          onSubmit={signInWithEmail}
+          // onSubmit={signInWithEmail}
           className="flex flex-col justify-center gap-3 text-salte-400 "
         >
           <label>
@@ -65,6 +67,7 @@ function Login() {
             Submit
           </button>
         </form>
+        <p>Don't have account?<NavLink to="/">Signup</NavLink> </p>
       </div>
     </div>
   );

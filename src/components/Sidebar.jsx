@@ -9,12 +9,11 @@ import { MdExpandMore } from "react-icons/md";
 import { IoAppsSharp } from "react-icons/io5";
 import { PiFiles } from "react-icons/pi";
 import { IoPeopleSharp } from "react-icons/io5";
-// import { CiSaveDown2 } from "react-icons/ci";
 import { IoBookmarkOutline } from "react-icons/io5";
 import { FaEnvelopeOpen } from "react-icons/fa6";
 import { SlPicture } from "react-icons/sl";
-import { useState } from "react";
 import { databases } from "../config/config";
+
 
 export default function Sidebar() {
   const promise = databases.listDocuments(
@@ -66,6 +65,8 @@ export default function Sidebar() {
     },
   ];
 
+  
+
   return (
     <div className="text-white divide-y divide-neutral-600">
       {/* header info section */}
@@ -108,6 +109,7 @@ export default function Sidebar() {
           addChannelOption
         />
       </div>
+
     </div>
   );
 }
