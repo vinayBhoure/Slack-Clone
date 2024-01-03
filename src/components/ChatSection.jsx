@@ -17,6 +17,7 @@ export default function ChatSection() {
         <div className="flex items-center">
           <h4 className="lowercase">
             <strong>{roomName}</strong>
+            <p>{roomId}</p>
           </h4>
           <FaRegStar className="ml-1" />
         </div>
@@ -26,7 +27,7 @@ export default function ChatSection() {
       </div>
 
       <div>
-       {roomId && <Messages flag={flag} />}
+       {roomId && <Messages/>}
         
       </div>
 

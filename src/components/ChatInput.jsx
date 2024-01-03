@@ -7,6 +7,8 @@ import { account } from "../config/config";
 import toast from "react-hot-toast";
 
 function ChatInput({channelId, flag, setFlag }) {
+
+  
   
   const [inputData, setInputData] = useState({
     inputData: "",
