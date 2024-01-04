@@ -4,7 +4,7 @@ import { databases } from "../config/config";
 import { useSelector } from "react-redux";
 import { Query } from "appwrite";
 
-function Messages() {
+function Messages({flag}) {
   const roomId = useSelector((state) => state.app.roomId);
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState([]);
@@ -27,10 +27,12 @@ function Messages() {
       }
     );
     setIsLoading(false);
-  }, [roomId]);
+  }, [roomId, flag]);
+
+
 
   return (
-    <div className="divide-y">
+    <div  >
       { isLoading ? (<div>loading...</div>) : messages?.map((message) => {
         return (
           <div className="w-4/5 m-1 bg-blue-100 px-2 rounded-md flex flex-col gap-1 

@@ -15,6 +15,7 @@ import { SlPicture } from "react-icons/sl";
 
 import { account, databases } from "../config/config";
 import toast from "react-hot-toast";
+ 
 
 export default function Sidebar(props) {
   const sideMenu = [
@@ -100,7 +101,7 @@ export default function Sidebar(props) {
     );
   }, [render]);
 
-
+ 
   return (
     <div className="text-white divide-y divide-neutral-600">
       {/* header info section */}
@@ -144,7 +145,7 @@ export default function Sidebar(props) {
           addChannelOption
           setRender={setRender}
           render={render}
-
+          username={username}
         />
     
         {
@@ -154,6 +155,8 @@ export default function Sidebar(props) {
               key={item.$id}
               id={item.$id}
               icon={"#"}
+              deleteBtn={!true}
+              
             />
           ))
         }
