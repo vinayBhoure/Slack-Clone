@@ -6,7 +6,7 @@ function LoginWithGoogle() {
        function loginHandler(e) {
         e.preventDefault();
 
-        account.createOAuth2Session('google', 'https://slack-clone-by-vinay.vercel.app', 'https://slack-clone-by-vinay.vercel.app/loginWithGoogle')
+        account.createOAuth2Session('google', 'http://localhost:3000', 'http://localhost:3000')
        }
 
   return (

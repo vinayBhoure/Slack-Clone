@@ -15,6 +15,7 @@ import { SlPicture } from "react-icons/sl";
 
 import { account, databases } from "../config/config";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router";
  
 
 export default function Sidebar(props) {
@@ -54,7 +55,7 @@ export default function Sidebar(props) {
   ];
 
   const setlogin = props.setlogin;
-
+  const navigate = useNavigate();
   function logoutHandler(e) {
     e.preventDefault();
     setlogin(false);
@@ -62,6 +63,7 @@ export default function Sidebar(props) {
 
     promise.then(
       function (response) {
+      navigate('/')
         toast.success("Logout Successfully");
         
       },
